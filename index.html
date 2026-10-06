@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23555'/%3E%3Cstop offset='1' stop-color='%23111'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='%23fff' stroke-opacity='.35' stroke-width='2'/%3E%3Cpath d='M32 20c-5-3-12-3-18-1v27c6-2 13-2 18 1 5-3 12-3 18-1V19c-6-2-13-2-18 1z' fill='%23fff' fill-opacity='.9'/%3E%3Cpath d='M32 20v27' stroke='%23222' stroke-width='2.5'/%3E%3Cpath d='M44 12l1.6 4.4L50 18l-4.4 1.6L44 24l-1.6-4.4L38 18l4.4-1.6z' fill='%23fff'/%3E%3C/svg%3E">
+<title>Peminjaman Buku – Perpustakaan SMA Telkom Bandung</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--bg:#0b0b0c;--t:#f4f4f4;--m:#a8a8ab;--g:rgba(255,255,255,.07);--gb:rgba(255,255,255,.18);--a:#fff;--ab:#0b0b0c;--bl:#8a8a8a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#e4e4e6;--t:#141414;--m:#5c5c60;--g:rgba(255,255,255,.45);--gb:rgba(255,255,255,.85);--a:#111;--ab:#fff;--bl:#fff}}
+:root[data-theme="light"]{--bg:#e4e4e6;--t:#141414;--m:#5c5c60;--g:rgba(255,255,255,.45);--gb:rgba(255,255,255,.85);--a:#111;--ab:#fff;--bl:#fff}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--t);font-family:'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif;min-height:100vh;display:grid;place-items:center;padding:20px;overflow-x:hidden;perspective:1200px}
+body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(var(--gb) 1px,transparent 1px),linear-gradient(90deg,var(--gb) 1px,transparent 1px);background-size:46px 46px;opacity:.12;mask-image:radial-gradient(circle at 50% 50%,#000,transparent 75%);-webkit-mask-image:radial-gradient(circle at 50% 50%,#000,transparent 75%);z-index:0}
+.blob{position:fixed;border-radius:50%;filter:blur(70px);opacity:.5;animation:fl 16s ease-in-out infinite alternate;z-index:0;background:var(--bl)}
+.b1{width:440px;height:440px;top:-130px;left:-110px}.b2{width:380px;height:380px;bottom:-110px;right:-90px;animation-delay:-6s;opacity:.35}.b3{width:260px;height:260px;top:45%;left:60%;opacity:.25;animation-delay:-3s}
+@keyframes fl{to{transform:translate(60px,-50px) scale(1.2)}}
+.fi{position:fixed;font-size:28px;opacity:.22;z-index:0;animation:fy linear infinite;filter:grayscale(1);pointer-events:none}
+@keyframes fy{from{transform:translateY(110vh) rotate(0)}to{transform:translateY(-20vh) rotate(360deg)}}
+#glow{position:fixed;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.2),transparent 65%);pointer-events:none;transform:translate(-50%,-50%);z-index:1;left:50%;top:50%;transition:left .2s,top .2s;mix-blend-mode:soft-light}
+#conf{position:fixed;inset:0;pointer-events:none;z-index:8;width:100%;height:100%}
+.card{position:relative;z-index:2;width:min(600px,100%);background:var(--g);border:1px solid var(--gb);border-radius:30px;padding:30px;backdrop-filter:blur(28px) saturate(150%);-webkit-backdrop-filter:blur(28px) saturate(150%);box-shadow:0 30px 70px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .15s;transform-style:preserve-3d;overflow:hidden}
+.card::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.12),transparent);animation:sh2 6s ease-in-out infinite;pointer-events:none}
+@keyframes sh2{60%,100%{left:130%}}
+header{text-align:center;margin-bottom:16px}
+.logo{width:62px;height:62px;margin:0 auto 10px;border-radius:20px;display:grid;place-items:center;font-size:30px;animation:bob 3.5s ease-in-out infinite;box-shadow:0 10px 30px rgba(255,255,255,.2)}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-5deg)}}
+h1{font-size:1.3rem;letter-spacing:.4px}
+header p{color:var(--m);font-size:.82rem;margin-top:4px;min-height:1.2em}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0 18px}
+.st{font-size:.72rem;padding:6px 12px;border-radius:20px;background:var(--g);border:1px solid var(--gb);color:var(--m);display:flex;gap:6px;align-items:center}
+.st b{color:var(--t)}
+.live{width:7px;height:7px;border-radius:50%;background:var(--a);animation:pl 1.4s infinite}
+@keyframes pl{50%{opacity:.2;transform:scale(1.8)}}
+.steps{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:22px}
+.dot{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:1rem;font-weight:600;border:1px solid var(--gb);color:var(--m);transition:.4s;background:var(--g)}
+.dot.on{background:var(--a);color:var(--ab);transform:scale(1.15);box-shadow:0 0 0 6px rgba(255,255,255,.12),0 0 26px rgba(255,255,255,.4)}
+.dot.done{color:var(--t)}
+.line{width:48px;height:3px;background:var(--gb);border-radius:3px;overflow:hidden}.line i{display:block;height:100%;width:0;background:var(--a);transition:width .6s}.line.f i{width:100%}
+.page{display:none;animation:in .55s cubic-bezier(.2,.8,.2,1)}.page.act{display:block}
+@keyframes in{from{opacity:0;transform:translateY(20px) scale(.97);filter:blur(7px)}}
+h2{font-size:1.08rem;margin-bottom:14px;font-weight:600}
+.hi{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding:12px 14px;border-radius:18px;background:var(--g);border:1px solid var(--gb)}
+.av{width:48px;height:48px;border-radius:50%;background:var(--a);color:var(--ab);display:grid;place-items:center;font-weight:700;font-size:1.1rem;transition:.4s;flex:none}
+.av.pop{animation:pop .5s}
+.hi div{font-size:.9rem;line-height:1.4}.hi small{color:var(--m);display:block;font-size:.75rem}
+.badge{display:inline-block;margin-top:2px;padding:2px 10px;border-radius:12px;background:var(--a);color:var(--ab);font-size:.7rem;font-weight:700}
+.f{position:relative;margin-bottom:14px}
+.f input,.f select{width:100%;padding:21px 14px 8px;border-radius:15px;border:1px solid var(--gb);background:var(--g);color:var(--t);font:inherit;font-size:.95rem;outline:none;transition:.3s;appearance:none;-webkit-appearance:none}
+.f select option,.f select optgroup{background:#222;color:#fff}
+.f label{position:absolute;left:14px;top:16px;color:var(--m);font-size:.9rem;pointer-events:none;transition:.25s}
+.f input:focus,.f select:focus{border-color:var(--a);box-shadow:0 0 0 4px rgba(255,255,255,.12);transform:translateY(-2px)}
+.f input:focus+label,.f input:not(:placeholder-shown)+label,.f select+label,.f input[type=date]+label{top:6px;font-size:.66rem;letter-spacing:.6px;text-transform:uppercase}
+.f.sel::after{content:"▾";position:absolute;right:16px;top:17px;color:var(--m);pointer-events:none}
+.f input[readonly]{opacity:.7}
+.cc{position:absolute;right:12px;top:6px;font-size:.62rem;color:var(--m)}
+.err{animation:sh .4s}.err input,.err select{border-color:#fff;background:rgba(255,255,255,.22)}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.row{grid-template-columns:1fr}.card{padding:20px}}
+.qd{display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 14px;align-items:center;font-size:.72rem;color:var(--m)}
+button.chip{flex:none;min-width:0;padding:6px 13px;border-radius:20px;font-size:.75rem;font-weight:500}
+.tk{position:relative;border-radius:20px;background:var(--g);border:1px dashed var(--gb);padding:16px 18px;margin-bottom:16px;display:grid;grid-template-columns:1fr auto;gap:6px 14px;font-size:.82rem}
+.tk::before,.tk::after{content:"";position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--bg);border:1px solid var(--gb);transform:translateY(-50%)}
+.tk::before{left:-9px}.tk::after{right:-9px}
+.tk small{color:var(--m);font-size:.62rem;letter-spacing:.8px;text-transform:uppercase;display:block}
+.tk .big{font-size:1rem;font-weight:600;word-break:break-word}
+.days{grid-row:span 2;align-self:center;text-align:center;padding:10px 14px;border-radius:16px;background:var(--a);color:var(--ab);min-width:78px;transition:.3s}
+.days b{font-size:1.5rem;display:block;line-height:1}.days span{font-size:.62rem;letter-spacing:.5px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+button{position:relative;overflow:hidden;flex:1;min-width:130px;padding:14px 18px;border-radius:15px;border:1px solid var(--gb);background:var(--g);color:var(--t);font:inherit;font-weight:600;font-size:.9rem;cursor:pointer;transition:.25s;backdrop-filter:blur(8px)}
+button:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.35)}button:active{transform:scale(.96)}
+button.p{background:var(--a);color:var(--ab);border-color:var(--a)}
+.rp{position:absolute;border-radius:50%;background:rgba(128,128,128,.5);transform:scale(0);animation:rp .6s linear;pointer-events:none}
+@keyframes rp{to{transform:scale(4);opacity:0}}
+.ok{display:block;margin:0 auto 14px;width:84px;height:84px}
+.ok circle{fill:none;stroke:var(--a);stroke-width:3;stroke-dasharray:252;stroke-dashoffset:252;animation:dr .9s .1s forwards}
+.ok path{fill:none;stroke:var(--a);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:50;stroke-dashoffset:50;animation:dr .5s .8s forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+.ty{padding:20px;border-radius:20px;background:var(--g);border:1px solid var(--gb);line-height:1.75;font-size:.96rem;margin-bottom:14px}
+.ty b{border-bottom:1px solid var(--m)}
+.bar{display:flex;gap:2px;height:34px;margin:12px 0 2px;align-items:stretch;opacity:.85}.bar i{background:var(--t);display:block}
+.idn{font-family:monospace;font-size:.7rem;color:var(--m);letter-spacing:3px;text-align:center}
+@keyframes pop{0%{transform:scale(.4) rotate(-20deg)}60%{transform:scale(1.25)}}
+.hist{margin-top:14px;max-height:0;overflow:hidden;transition:max-height .5s;font-size:.78rem}.hist.o{max-height:260px;overflow:auto}
+.hist div{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-radius:12px;background:var(--g);margin-top:6px;border:1px solid var(--gb)}
+.hist span{color:var(--m)}
+#toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,140px);background:var(--a);color:var(--ab);padding:12px 22px;border-radius:30px;font-size:.85rem;z-index:20;transition:.4s;max-width:90vw;text-align:center}#toast.s{transform:translate(-50%,0)}
+.th{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:5;min-width:0;flex:none;width:44px;height:44px;padding:0;border-radius:50%}
+#md{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:15;display:none;place-items:center;padding:20px;backdrop-filter:blur(6px)}#md.o{display:grid}
+#md .card{width:min(560px,100%)}#md textarea{width:100%;height:220px;background:var(--g);color:var(--t);border:1px solid var(--gb);border-radius:14px;padding:12px;font:12px monospace;margin:10px 0}
+#pa{display:none}
+@media print{body>*:not(#pa){display:none!important}#pa{display:block;color:#000;background:#fff;padding:30px;font-family:sans-serif}#pa h1{background:#111;color:#fff;padding:20px;border-radius:10px}#pa p{margin:12px 0;font-size:16px}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div id="glow"></div><canvas id="conf"></canvas>
+<button class="th" id="th" aria-label="Ganti tema">◐</button>
+
+<main class="card" id="card">
+  <header>
+    <div class="logo"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23555'/%3E%3Cstop offset='1' stop-color='%23111'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='none' stroke='%23fff' stroke-opacity='.35' stroke-width='2'/%3E%3Cpath d='M32 20c-5-3-12-3-18-1v27c6-2 13-2 18 1 5-3 12-3 18-1V19c-6-2-13-2-18 1z' fill='%23fff' fill-opacity='.9'/%3E%3Cpath d='M32 20v27' stroke='%23222' stroke-width='2.5'/%3E%3Cpath d='M44 12l1.6 4.4L50 18l-4.4 1.6L44 24l-1.6-4.4L38 18l4.4-1.6z' fill='%23fff'/%3E%3C/svg%3E" alt="" width="62" height="62" style="border-radius:20px"></div>
+    <h1>Perpustakaan SMA Telkom Bandung</h1>
+    <p id="sub"></p>
+  </header>
+  <div class="chips">
+    <div class="st"><i class="live"></i><span id="clk"></span></div>
+    <div class="st">📚 Total pinjam: <b id="tot">0</b></div>
+    <div class="st">🗓 <span id="tgl"></span></div>
+  </div>
+  <div class="steps">
+    <div class="dot on" id="d1">👤</div><div class="line" id="l1"><i></i></div>
+    <div class="dot" id="d2">📚</div><div class="line" id="l2"><i></i></div>
+    <div class="dot" id="d3">🎟</div>
+  </div>
+
+  <section class="page act" id="p1">
+    <h2>Siapa yang meminjam?</h2>
+    <div class="hi"><div class="av" id="av">?</div><div><span id="gr">Halo! Isi namamu dulu ya 👋</span><small id="gs">Pilih kelasmu juga di bawah</small><span class="badge" id="bd" style="display:none"></span></div></div>
+    <div class="f"><input id="nama" placeholder=" " autocomplete="off" maxlength="40"><label for="nama">Nama lengkap</label></div>
+    <div class="f sel"><select id="kelas"></select><label for="kelas">Kelas</label></div>
+    <div class="btns"><button class="p" data-go="2">Lanjut →</button></div>
+  </section>
+
+  <section class="page" id="p2">
+    <h2>Buku apa yang mau dipinjam?</h2>
+    <div class="f"><input id="judul" list="bk" placeholder=" " autocomplete="off" maxlength="80"><label for="judul">Judul buku</label><span class="cc" id="c1"></span></div>
+    <datalist id="bk"></datalist>
+    <div class="f"><input id="penerbit" placeholder=" " autocomplete="off" maxlength="50"><label for="penerbit">Penerbit</label></div>
+    <div class="row">
+      <div class="f"><input id="tpinjam" type="date" readonly><label for="tpinjam">Tgl peminjaman (otomatis)</label></div>
+      <div class="f"><input id="tkembali" type="date"><label for="tkembali">Tgl pengembalian</label></div>
+    </div>
+    <div class="qd">Cepat pilih:
+      <button class="chip" data-add="3">+3 hari</button><button class="chip" data-add="7">+1 minggu</button><button class="chip" data-add="14">+2 minggu</button>
+    </div>
+    <div class="tk">
+      <div><small>Peminjam</small><span class="big" id="pn">-</span></div>
+      <div class="days" id="pd"><b>–</b><span>HARI</span></div>
+      <div><small>Buku</small><span class="big" id="pj">Judul buku…</span><span id="pp" style="color:var(--m)"></span></div>
+    </div>
+    <div class="btns"><button data-go="1">← Kembali</button><button class="p" data-go="3">Pinjam Buku ✓</button></div>
+  </section>
+
+  <section class="page" id="p3">
+    <svg class="ok" viewBox="0 0 84 84"><circle cx="42" cy="42" r="40"/><path d="M26 43l12 12 21-24"/></svg>
+    <div class="ty" id="ty"></div>
+    <div class="bar" id="bar"></div><div class="idn" id="idn"></div>
+    <div class="btns" style="margin-top:16px">
+      <button class="p" id="pdf">🖨 Cetak PDF</button>
+      <button id="csv">📊 Cetak CSV</button>
+      <button id="hs">🕘 Riwayat</button>
+      <button id="baru">＋ Peminjaman Baru</button>
+    </div>
+    <div class="hist" id="hist"></div>
+  </section>
+</main>
+
+<div id="md"><div class="card"><h2>Salin data CSV</h2><p style="font-size:.8rem;color:var(--m)">Unduhan otomatis tidak tersedia di tampilan ini. Salin teks ini, tempel ke Excel/Notepad, lalu simpan sebagai .csv</p><textarea id="ta" readonly></textarea><div class="btns"><button class="p" id="cp">Salin</button><button id="cl">Tutup</button></div></div></div>
+<div id="pa"></div>
+<div id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const KELAS={"Kelas X":Array.from({length:11},(_,i)=>"X-"+(i+1)),"XI MIGEO":[1,2,3].map(n=>"XI MIGEO "+n),"XI MISOS":[1,2,3,4].map(n=>"XI MISOS "+n),"XI SOSHUM":[1,2,3].map(n=>"XI SOSHUM "+n),"XII MIGEO":[1,2,3].map(n=>"XII MIGEO "+n),"XII MISOS":[1,2,3].map(n=>"XII MISOS "+n),"XII SOSHUM":[1,2,3].map(n=>"XII SOSHUM "+n)};
+$('kelas').innerHTML='<option value="" hidden></option>'+Object.entries(KELAS).map(([g,a])=>`<optgroup label="${g}">${a.map(k=>`<option>${k}</option>`).join('')}</optgroup>`).join('');
+$('bk').innerHTML=["Laskar Pelangi","Bumi Manusia","Filosofi Teras","Atomic Habits","Sapiens","Negeri 5 Menara","Pulang","Laut Bercerita","Dilan 1990","Habis Gelap Terbitlah Terang"].map(b=>`<option value="${b}">`).join('');
+
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const fmt=s=>new Date(s+'T00:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let records=[],cur=null;
+try{records=JSON.parse(localStorage.getItem('pinjam')||'[]')}catch(e){}
+const persist=()=>{try{localStorage.setItem('pinjam',JSON.stringify(records))}catch(e){}};
+const dlP=(()=>{try{return claude.use('downloads')}catch(e){return Promise.resolve(null)}})();
+
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('s');clearTimeout(t._);t._=setTimeout(()=>t.classList.remove('s'),3000)}
+function shake(id){const f=$(id).closest('.f');f.classList.remove('err');void f.offsetWidth;f.classList.add('err');setTimeout(()=>f.classList.remove('err'),900)}
+function show(n){
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('act',i+1===n));
+  const ic=['👤','📚','🎟'];
+  for(let i=1;i<=3;i++){const d=$('d'+i);d.className='dot'+(i===n?' on':i<n?' done':'');d.textContent=i<n?'✓':ic[i-1]}
+  $('l1').classList.toggle('f',n>1);$('l2').classList.toggle('f',n>2);
+}
+function today(){return iso(new Date())}
+function setDates(){$('tpinjam').value=today();$('tkembali').min=today();$('tkembali').value=''}
+setDates();
+
+// jam, tanggal, total, subjudul mengetik
+function tick(){const d=new Date();$('clk').textContent=d.toLocaleTimeString('id-ID');$('tgl').textContent=d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'short'})}
+tick();setInterval(tick,1000);
+const upTot=()=>$('tot').textContent=records.length;upTot();
+const sub="Sistem Peminjaman Buku • Baca hari ini, hebat esok hari";let si=0;
+(function ty(){$('sub').textContent=sub.slice(0,si++);if(si<=sub.length)setTimeout(ty,38)})();
+// ikon melayang
+['📚','📖','🔖','✏️','📕','📘'].forEach((e,i)=>{const s=document.createElement('span');s.className='fi';s.textContent=e;s.style.cssText=`left:${8+i*16}%;animation-duration:${18+i*4}s;animation-delay:-${i*5}s;font-size:${22+i*4}px`;document.body.appendChild(s)});
+
+// halaman 1: avatar & sapaan live
+function up1(){
+  const n=$('nama').value.trim(),k=$('kelas').value,av=$('av'),nx=n?n.split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase():'?';
+  if(av.textContent!==nx){av.textContent=nx;av.classList.remove('pop');void av.offsetWidth;av.classList.add('pop')}
+  $('gr').textContent=n?`Halo, ${n.split(/\s+/)[0]}! 👋`:'Halo! Isi namamu dulu ya 👋';
+  $('gs').textContent=k?'Kelasmu sudah dipilih, lanjut ya!':'Pilih kelasmu juga di bawah';
+  $('bd').style.display=k?'inline-block':'none';$('bd').textContent=k;
+}
+$('nama').oninput=()=>{up1();up2()};$('kelas').onchange=()=>{up1();up2()};
+
+// halaman 2: tiket preview live
+function up2(){
+  $('pn').textContent=$('nama').value.trim()?`${$('nama').value.trim()} • ${$('kelas').value||'-'}`:'-';
+  $('pj').textContent=$('judul').value.trim()||'Judul buku…';
+  $('pp').textContent=$('penerbit').value.trim()?' — '+$('penerbit').value.trim():'';
+  $('c1').textContent=$('judul').value.length?$('judul').value.length+'/80':'';
+  const k=$('tkembali').value,pd=$('pd');
+  if(k){const n=Math.round((new Date(k+'T00:00:00')-new Date(today()+'T00:00:00'))/864e5);pd.innerHTML=`<b>${n}</b><span>HARI</span>`;pd.style.opacity=n<0?.4:1}else pd.innerHTML='<b>–</b><span>HARI</span>';
+}
+['judul','penerbit','tkembali'].forEach(i=>$(i).oninput=up2);
+document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const d=new Date();d.setDate(d.getDate()+ +b.dataset.add);$('tkembali').value=iso(d);up2()});
+
+function go(n){
+  if(n===2){
+    if(!$('nama').value.trim())return shake('nama'),toast('Nama belum diisi');
+    if(!$('kelas').value)return shake('kelas'),toast('Pilih kelas dulu');
+    up2();
+  }
+  if(n===3){
+    if(!$('judul').value.trim())return shake('judul'),toast('Judul buku belum diisi');
+    if(!$('penerbit').value.trim())return shake('penerbit'),toast('Penerbit belum diisi');
+    const k=$('tkembali').value;
+    if(!k)return shake('tkembali'),toast('Isi tanggal pengembalian');
+    if(k<$('tpinjam').value)return shake('tkembali'),toast('Tanggal kembali tidak boleh sebelum tanggal pinjam');
+    cur={id:'PSTB-'+Date.now().toString(36).toUpperCase().slice(-6),nama:$('nama').value.trim(),kelas:$('kelas').value,judul:$('judul').value.trim(),penerbit:$('penerbit').value.trim(),pinjam:$('tpinjam').value,kembali:k};
+    records.push(cur);persist();upTot();
+    $('ty').innerHTML=`Terima kasih <b>${esc(cur.nama)}</b> (<b>${esc(cur.kelas)}</b>) telah meminjam buku <b>${esc(cur.judul)}</b> (${esc(cur.penerbit)}) di SMA Telkom Bandung pada tanggal <b>${fmt(cur.pinjam)}</b>. Buku harus dikembalikan pada tanggal <b>${fmt(cur.kembali)}</b>. Semoga kamu semangat membacanya! 📚`;
+    $('bar').innerHTML=[...(cur.id+cur.id)].map((c,i)=>`<i style="width:${1+(c.charCodeAt(0)+i)%4}px;margin-right:${1+(i%3)}px"></i>`).join('');
+    $('idn').textContent=cur.id;
+    $('pa').innerHTML=`<h1>Bukti Peminjaman – Perpustakaan SMA Telkom Bandung</h1><p><b>ID:</b> ${cur.id}</p><p><b>Nama:</b> ${esc(cur.nama)} (${esc(cur.kelas)})</p><p><b>Buku:</b> ${esc(cur.judul)} – ${esc(cur.penerbit)}</p><p><b>Tgl pinjam:</b> ${fmt(cur.pinjam)}</p><p><b>Wajib kembali:</b> ${fmt(cur.kembali)}</p>`;
+    renderHist();setTimeout(confetti,500);
+  }
+  show(n);
+}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));
+$('baru').onclick=()=>{['nama','kelas','judul','penerbit'].forEach(i=>$(i).value='');setDates();up1();up2();show(1)};
+function renderHist(){$('hist').innerHTML=records.slice(-5).reverse().map(r=>`<div><b>${esc(r.nama)}</b><span>${esc(r.judul)} → ${fmt(r.kembali)}</span></div>`).join('')}
+$('hs').onclick=()=>$('hist').classList.toggle('o');
+
+// ===== unduhan =====
+async function saveFile(name,data,onFail){
+  let d=null;try{d=await dlP}catch(e){}
+  if(d){
+    try{await d.save({filename:name,data});return}
+    catch(e){if(e&&e.code==='declined')return;console.error(e);toast('Unduhan gagal'+(e&&e.code?' ('+e.code+')':'')+', mencoba cara lain…')}
+  }
+  try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data]));a.download=name;document.body.appendChild(a);a.click();a.remove()}catch(e){}
+  if(onFail)onFail();
+}
+$('csv').onclick=()=>{
+  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const rows=[['No','ID','Nama','Kelas','Judul Buku','Penerbit','Tgl Pinjam','Tgl Kembali'],...records.map((r,i)=>[i+1,r.id,r.nama,r.kelas,r.judul,r.penerbit,r.pinjam,r.kembali])];
+  const csv='\ufeff'+rows.map(r=>r.map(q).join(',')).join('\r\n');
+  saveFile('data-peminjaman-buku.csv',csv,()=>{$('ta').value=csv;$('md').classList.add('o')});
+};
+$('cp').onclick=()=>{$('ta').select();try{document.execCommand('copy');toast('CSV tersalin ✓')}catch(e){}};
+$('cl').onclick=()=>$('md').classList.remove('o');
+
+$('pdf').onclick=()=>{
+  if(!window.jspdf){toast('Pustaka PDF belum termuat, membuka cetak biasa…');return window.print()}
+  let buf;
+  try{buf=makePdf(cur)}catch(e){console.error(e);toast('Gagal membuat PDF, membuka cetak biasa…');return window.print()}
+  saveFile('bukti-peminjaman-'+cur.id+'.pdf',buf,()=>window.print());
+};
+function makePdf(r){
+  const {jsPDF}=window.jspdf,d=new jsPDF({unit:'mm',format:'a5'}),W=148,PX=18,TW=W-2*PX;
+  const clip=(t,n)=>{let l=d.splitTextToSize(t,TW);if(l.length>n){l=l.slice(0,n);l[n-1]=l[n-1].replace(/.{0,3}$/,'...')}return l};
+  d.setFont('helvetica','normal');d.setFontSize(10.5);
+  const F=[['NAMA',clip(r.nama,1)],['KELAS',clip(r.kelas,1)],['JUDUL BUKU',clip(r.judul,2)],['PENERBIT',clip(r.penerbit,1)]];
+  const CT=56,fh=F.reduce((n,f)=>n+11+(f[1].length-1)*4.8,0),divY=CT+20+fh,bY=divY+6,CB=bY+16+7;
+  // header
+  d.setFillColor(17,17,17);d.rect(0,0,W,48,'F');
+  d.setFillColor(40,40,40);d.circle(130,6,26,'F');d.setFillColor(60,60,60);d.circle(6,48,12,'F');
+  d.setFillColor(17,17,17);d.rect(0,48,W,2,'F');
+  d.setTextColor(255);d.setFont('helvetica','bold');d.setFontSize(9);d.text('PERPUSTAKAAN',14,17);
+  d.setFontSize(18);d.text('SMA TELKOM BANDUNG',14,27);
+  d.setFont('helvetica','normal');d.setFontSize(10);d.setTextColor(190);d.text('BUKTI PEMINJAMAN BUKU',14,37);
+  // kartu
+  d.setFillColor(245,245,245);d.setDrawColor(210);d.setLineWidth(.3);d.roundedRect(10,CT,W-20,CB-CT,4,4,'FD');
+  d.setFillColor(17,17,17);d.roundedRect(PX,CT+5,40,8,4,4,'F');
+  d.setTextColor(255);d.setFont('courier','bold');d.setFontSize(8.5);d.text(r.id,PX+20,CT+10.3,{align:'center'});
+  let y=CT+23;
+  F.forEach(([k,l])=>{
+    d.setTextColor(130);d.setFont('helvetica','bold');d.setFontSize(7);d.text(k,PX,y);
+    d.setTextColor(20);d.setFont('helvetica','normal');d.setFontSize(10.5);d.text(l,PX,y+5);
+    y+=11+(l.length-1)*4.8});
+  d.setDrawColor(150);d.setLineDashPattern([1.5,1.5],0);d.line(PX,divY,W-PX,divY);d.setLineDashPattern([],0);
+  const bw=(TW-6)/2;
+  d.setFillColor(255,255,255);d.setDrawColor(190);d.roundedRect(PX,bY,bw,16,3,3,'FD');
+  d.setFillColor(17,17,17);d.roundedRect(PX+bw+6,bY,bw,16,3,3,'F');
+  d.setFont('helvetica','bold');d.setFontSize(6.5);
+  d.setTextColor(130);d.text('TGL PINJAM',PX+4,bY+5.5);d.setTextColor(190);d.text('WAJIB KEMBALI',PX+bw+10,bY+5.5);
+  d.setFontSize(10);d.setTextColor(20);d.text(fmt(r.pinjam),PX+4,bY+12);d.setTextColor(255);d.text(fmt(r.kembali),PX+bw+10,bY+12);
+  // catatan
+  d.setTextColor(100);d.setFont('helvetica','italic');d.setFontSize(8);
+  d.text(d.splitTextToSize('Harap kembalikan buku tepat waktu dan jaga kondisinya. Semoga kamu semangat membacanya!',TW),W/2,CB+8,{align:'center'});
+  // tanda tangan
+  const sy=Math.max(CB+30,186);
+  d.setDrawColor(120);d.line(PX,sy,PX+42,sy);d.line(W-PX-42,sy,W-PX,sy);
+  d.setFont('helvetica','normal');d.setFontSize(7.5);d.setTextColor(90);
+  d.text('Peminjam',PX+21,sy+4.5,{align:'center'});d.text('Petugas Perpustakaan',W-PX-21,sy+4.5,{align:'center'});
+  d.setFillColor(17,17,17);d.rect(0,204,W,6,'F');
+  return d.output('arraybuffer');
+}
+
+// ===== efek =====
+function confetti(){
+  const c=$('conf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const P=Array.from({length:110},()=>({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-.5)*16,vy:-Math.random()*14-3,s:4+Math.random()*7,r:Math.random()*6,g:Math.floor(120+Math.random()*135)}));
+  let f=0;(function a(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.r+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=`rgb(${p.g},${p.g},${p.g})`;x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);x.restore()});if(++f<130)requestAnimationFrame(a);else x.clearRect(0,0,c.width,c.height)})();
+}
+const card=$('card');
+document.addEventListener('pointermove',e=>{
+  $('glow').style.left=e.clientX+'px';$('glow').style.top=e.clientY+'px';
+  const r=card.getBoundingClientRect(),dx=(e.clientX-r.left-r.width/2)/r.width,dy=(e.clientY-r.top-r.height/2)/r.height;
+  card.style.transform=`rotateY(${dx*5}deg) rotateX(${-dy*5}deg)`;
+});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const c=b.getBoundingClientRect(),s=document.createElement('span'),z=Math.max(c.width,c.height);
+  s.className='rp';s.style.cssText=`width:${z}px;height:${z}px;left:${e.clientX-c.left-z/2}px;top:${e.clientY-c.top-z/2}px`;b.appendChild(s);setTimeout(()=>s.remove(),600)});
+$('th').onclick=()=>{const r=document.documentElement,l=getComputedStyle(r).getPropertyValue('--bg').trim()==='#e4e4e6';r.dataset.theme=l?'dark':'light'};
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName==='INPUT'){const p=e.target.closest('.page');if(p&&p.id==='p1')go(2);else if(p&&p.id==='p2')go(3)}});
+</script>
+</body>
+</html>
